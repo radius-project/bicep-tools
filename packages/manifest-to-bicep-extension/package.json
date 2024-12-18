@@ -1,0 +1,10 @@
+{
+  "name": "manifest-to-bicep-extension",
+  "version": "0.0.1",
+  "license": "Apache-2.0",
+  "packageManager": "yarn@4.5.2",
+  "scripts": {
+    "build": "tsc",
+    "watch": "tsc -w"
+  }
+}
