@@ -9,8 +9,7 @@
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "https://npm.pkg.github.com",
-    "scope": "@radius-project"
+    "registry": "@radius-project:https://npm.pkg.github.com"
   },
   "packageManager": "yarn@4.5.2",
   "files": [
