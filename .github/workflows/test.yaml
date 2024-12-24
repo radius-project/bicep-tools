@@ -17,18 +17,22 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: '18'
       - name: Enable Corepack
         run: |
           corepack enable
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --no-immutable
+        env:
+          YARN_ENABLE_HARDENED_MODE: 0
 
       - name: Run tests
         run: yarn run test:all

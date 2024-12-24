@@ -874,6 +874,12 @@ __metadata:
 "@radius-project/manifest-to-bicep-extension@workspace:packages/manifest-to-bicep-extension":
   version: 0.0.0-use.local
   resolution: "@radius-project/manifest-to-bicep-extension@workspace:packages/manifest-to-bicep-extension"
+  dependencies:
+    "@types/node": "npm:^22.7.5"
+    "@types/yargs": "npm:^17.0.33"
+    bicep-types: "file:../../bicep-types/src/bicep-types"
+    yaml: "npm:^2.6.0"
+    yargs: "npm:^17.7.2"
   languageName: unknown
   linkType: soft
 
@@ -991,7 +997,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/node@npm:*":
+"@types/node@npm:*, @types/node@npm:^22.7.5":
   version: 22.10.2
   resolution: "@types/node@npm:22.10.2"
   dependencies:
@@ -1014,7 +1020,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@types/yargs@npm:^17.0.8":
+"@types/yargs@npm:^17.0.33, @types/yargs@npm:^17.0.8":
   version: 17.0.33
   resolution: "@types/yargs@npm:17.0.33"
   dependencies:
@@ -1358,6 +1364,13 @@ __metadata:
     typescript-eslint: "npm:^8.18.1"
   languageName: unknown
   linkType: soft
+
+"bicep-types@file:../../bicep-types/src/bicep-types::locator=%40radius-project%2Fmanifest-to-bicep-extension%40workspace%3Apackages%2Fmanifest-to-bicep-extension":
+  version: 0.0.0-placeholder
+  resolution: "bicep-types@file:../../bicep-types/src/bicep-types#../../bicep-types/src/bicep-types::hash=15c3ef&locator=%40radius-project%2Fmanifest-to-bicep-extension%40workspace%3Apackages%2Fmanifest-to-bicep-extension"
+  checksum: 10c0/6a38eccdd4b4ecfff20b63eb522af8ac4cd8d6f87bf8451b367e0ffac2742f2139364749c507c3eed52b426c7bb129f3a1cc745ce81cb0d1ff2199b338ccb8d2
+  languageName: node
+  linkType: hard
 
 "brace-expansion@npm:^1.1.7":
   version: 1.1.11
@@ -4270,6 +4283,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"yaml@npm:^2.6.0":
+  version: 2.6.1
+  resolution: "yaml@npm:2.6.1"
+  bin:
+    yaml: bin.mjs
+  checksum: 10c0/aebf07f61c72b38c74d2b60c3a3ccf89ee4da45bcd94b2bfb7899ba07a5257625a7c9f717c65a6fc511563d48001e01deb1d9e55f0133f3e2edf86039c8c1be7
+  languageName: node
+  linkType: hard
+
 "yargs-parser@npm:^21.1.1":
   version: 21.1.1
   resolution: "yargs-parser@npm:21.1.1"
@@ -4277,7 +4299,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"yargs@npm:^17.3.1":
+"yargs@npm:^17.3.1, yargs@npm:^17.7.2":
   version: 17.7.2
   resolution: "yargs@npm:17.7.2"
   dependencies:

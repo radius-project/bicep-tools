@@ -11,8 +11,6 @@ on:
       - main
       - features/*
       - release/*
-env: 
-  CI_PUBLISH: 
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,18 +18,22 @@ jobs:
       contents: read
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: '18'
       - name: Enable Corepack
         run: |
           corepack enable
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --no-immutable
+        env:
+          YARN_ENABLE_HARDENED_MODE: 0
 
       - name: Build
         run: yarn run build:all
@@ -47,7 +49,9 @@ jobs:
       id-token: write
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+        with:
+          submodules: true
 
       - name: Get commit version
         shell: bash
@@ -57,7 +61,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: "18"
+          node-version: '18'
           registry-url: 'https://npm.pkg.github.com'
           scope: '@radius-project'
       - name: Enable Corepack
@@ -65,7 +69,9 @@ jobs:
           corepack enable
 
       - name: Install dependencies
-        run: yarn install --immutable
+        run: yarn install --no-immutable
+        env:
+          YARN_ENABLE_HARDENED_MODE: 0
 
       - name: Publish
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}

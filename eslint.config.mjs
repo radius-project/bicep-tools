@@ -1,10 +1,15 @@
 // @ts-check
-import eslint from "@eslint/js";
-import tseslint from "typescript-eslint";
+import eslint from '@eslint/js'
+import tseslint from 'typescript-eslint'
 
 export default tseslint.config(
   {
-    ignores: ["**/jest.config.js", "**/eslint.config.mjs", "**/dist/**"],
+    ignores: [
+      '**/jest.config.js',
+      '**/eslint.config.mjs',
+      '**/dist/**',
+      '**/bicep-types/**',
+    ],
   },
   eslint.configs.recommended,
   tseslint.configs.strict,
@@ -16,5 +21,5 @@ export default tseslint.config(
         tsconfigRootDir: import.meta.dirname,
       },
     },
-  },
-);
+  }
+)

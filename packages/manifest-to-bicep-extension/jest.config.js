@@ -1,12 +1,12 @@
 module.exports = {
-  displayName: "manifest-to-bicep-extension",
-  roots: ["<rootDir>"],
+  displayName: 'manifest-to-bicep-extension',
+  roots: ['<rootDir>'],
   transform: {
-    "^.+\\.tsx?$": "ts-jest",
+    '^.+\\.tsx?$': 'ts-jest',
   },
-  testRegex: "(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$",
-  moduleFileExtensions: ["ts", "tsx", "js", "jsx", "json", "node"],
+  testRegex: '(/__tests__/.*|(\\.|/)(test|spec))\\.tsx?$',
+  moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
-    "^src/(.*)": "<rootDir>/src/$1",
+    '^src/(.*)': '<rootDir>/src/$1',
   },
-};
+}

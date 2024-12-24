@@ -17,8 +17,9 @@
     "target": "esnext",
     "outDir": "dist",
     "paths": {
-      "src/*": ["src/*"]
+      "src/*": ["src/*"],
+      "bicep-types": ["../../bicep-types/src/bicep-types"]
     }
   },
-  "include": ["src/**/*", "test/**/*"],
+  "include": ["src/**/*", "test/**/*"]
 }
