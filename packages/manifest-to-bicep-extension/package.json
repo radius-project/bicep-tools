@@ -1,15 +1,15 @@
 {
   "name": "@radius-project/manifest-to-bicep-extension",
-  "version": "0.0.1",
+  "version": "0.0.1-alpha",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/radius-project/bicep-tools.git"
+    "url": "git+https://github.com/radius-project/bicep-tools.git"
   },
   "publishConfig": {
     "access": "public",
     "provenance": true,
-    "registry": "@radius-project:https://npm.pkg.github.com"
+    "@radius-project:registry": "https://npm.pkg.github.com"
   },
   "packageManager": "yarn@4.5.2",
   "files": [
@@ -19,6 +19,8 @@
   "scripts": {
     "build": "tsc",
     "watch": "tsc -w",
-    "prepublishOnly": "yarn build"
+    "publish": "npm publish",
+    "prepublishOnly": "yarn build",
+    "version": "npm pkg set version=${0}"
   }
 }

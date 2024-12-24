@@ -10,7 +10,7 @@
     "format-check:all": "yarn run prettier --check .",
     "format:all": "yarn run prettier --write .",
     "lint:all": "yarn run eslint .",
-    "publish:all": "yarn workspaces foreach -A run npm publish $PUBLISH_ARGS",
+    "publish:all": "yarn workspace @radius-project/manifest-to-bicep-extension run version ${0} && yarn workspace @radius-project/manifest-to-bicep-extension run publish $PUBLISH_ARGS",
     "test:all": "jest",
     "test:ci": "jest --ci --reporters default --reporters github-actions"
   },

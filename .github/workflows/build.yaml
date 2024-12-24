@@ -12,7 +12,7 @@ on:
       - features/*
       - release/*
 env: 
-  CI_PUBLISH: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
+  CI_PUBLISH: 
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -67,9 +67,9 @@ jobs:
         run: yarn install --immutable
 
       - name: Publish
-        if: ${{ env.CI_PUBLISH }}
+        if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         shell: bash
         env:
-          PUBLISH_ARGS: --access public --new-version 0.0.1-alpha+${{ env.COMMIT }} --tag alpha
-          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn run publish:all
+          PUBLISH_ARGS: --access public --tag alpha
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: yarn run publish:all 0.0.1-alpha.${{ env.COMMIT }}
