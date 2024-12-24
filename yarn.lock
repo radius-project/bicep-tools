@@ -871,6 +871,12 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@radius-project/manifest-to-bicep-extension@workspace:packages/manifest-to-bicep-extension":
+  version: 0.0.0-use.local
+  resolution: "@radius-project/manifest-to-bicep-extension@workspace:packages/manifest-to-bicep-extension"
+  languageName: unknown
+  linkType: soft
+
 "@sinclair/typebox@npm:^0.27.8":
   version: 0.27.8
   resolution: "@sinclair/typebox@npm:0.27.8"
@@ -3130,12 +3136,6 @@ __metadata:
   checksum: 10c0/b0e6e599780ce6bab49cc413eba822f7d1f0dfebd1c103eaa3785c59e43e22c59018323cf9e1708f0ef5329e94a745d163fcbb6bff8e4c6742f9be9e86f3500c
   languageName: node
   linkType: hard
-
-"manifest-to-bicep-extension@workspace:packages/manifest-to-bicep-extension":
-  version: 0.0.0-use.local
-  resolution: "manifest-to-bicep-extension@workspace:packages/manifest-to-bicep-extension"
-  languageName: unknown
-  linkType: soft
 
 "merge-stream@npm:^2.0.0":
   version: 2.0.0

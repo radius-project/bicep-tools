@@ -11,10 +11,13 @@ on:
       - main
       - features/*
       - release/*
+env: 
+  CI_PUBLISH: ${{ github.event_name == 'pull_request' && github.event.action == 'opened' }}
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    permissions:
+      contents: read
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -35,3 +38,35 @@ jobs:
 
       - name: Lint
         run: yarn run lint:all
+  publish:
+    runs-on: ubuntu-latest
+    needs: build
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Get commit version
+        shell: bash
+        run: |
+          echo "COMMIT=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: "18"
+      - name: Enable Corepack
+        run: |
+          corepack enable
+
+      - name: Install dependencies
+        run: yarn install --immutable
+
+      - name: Publish
+        if: ${{ env.CI_PUBLISH }}
+        shell: bash
+        env:
+          PUBLISH_ARGS: --access public --new-version 0.0.1-alpha+${{ env.COMMIT }} --tag alpha
+        run: yarn run publish:all

@@ -6,7 +6,7 @@
     "lib": ["es2017"],
     "module": "Node16",
     "moduleResolution": "nodenext",
-    "noEmit": true,
+    "noEmitOnError": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "preserveConstEnums": true,
@@ -15,9 +15,10 @@
     "sourceMap": true,
     "strict": true,
     "target": "esnext",
+    "outDir": "dist",
     "paths": {
       "src/*": ["src/*"]
     }
   },
-  "include": ["src/**/*", "test/**/*"]
+  "include": ["src/**/*", "test/**/*"],
 }
