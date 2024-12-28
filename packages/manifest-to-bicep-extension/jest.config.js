@@ -8,5 +8,6 @@ module.exports = {
   moduleFileExtensions: ['ts', 'tsx', 'js', 'jsx', 'json', 'node'],
   moduleNameMapper: {
     '^src/(.*)': '<rootDir>/src/$1',
+    '^bicep-types$': '<rootDir>../../bicep-types/src/bicep-types/',
   },
 }

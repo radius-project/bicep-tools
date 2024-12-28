@@ -24,7 +24,7 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: '18'
+          node-version: '20'
       - name: Enable Corepack
         run: |
           corepack enable
@@ -33,6 +33,8 @@ jobs:
         run: yarn install --no-immutable
         env:
           YARN_ENABLE_HARDENED_MODE: 0
-
+      - name: Verify bicep-types Build Output
+        run:  find bicep-types/src/bicep-types/lib | sed -e "s/[^-][^\/]*\// |/g" -e "s/|\([^ ]\)/|-\1/"
+        
       - name: Run tests
         run: yarn run test:all

@@ -1,16 +1,16 @@
+import { parse } from 'yaml'
+
 export interface ResourceProvider {
   name: string
-  types: ResourceType[]
+  types: Record<string, ResourceType>
 }
 
 export interface ResourceType {
-  name: string
   defaultApiVersion?: string
-  apiVersions: APIVersion[]
+  apiVersions: Record<string, APIVersion>
 }
 
 export interface APIVersion {
-  name: string
   schema: Schema
   capabilities?: string[]
 }
@@ -18,7 +18,12 @@ export interface APIVersion {
 export interface Schema {
   type: 'string' | 'object'
   description?: string
-  properties?: Schema[]
+  properties?: Record<string, Schema>
   required?: string[]
   readOnly?: boolean
+}
+
+export function parseManifest(input: string): ResourceProvider {
+  const parsed = parse(input) as ResourceProvider
+  return parsed
 }

@@ -1,12 +1,12 @@
-import { parse } from 'yaml'
 import yargs from 'yargs'
 import { hideBin } from 'yargs/helpers'
 import fs from 'node:fs'
 import { convert } from './converter'
+import { parseManifest } from './manifest'
 
 async function generate(manifest: string, output: string) {
   const data = fs.readFileSync(manifest, 'utf8')
-  const parsed = parse(data)
+  const parsed = parseManifest(data)
   const converted = convert(parsed)
 
   fs.rmSync(`${output}/types.json`, { force: true })

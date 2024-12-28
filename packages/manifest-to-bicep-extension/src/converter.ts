@@ -11,7 +11,7 @@ import {
   writeIndexMarkdown,
   writeTypesJson,
 } from 'bicep-types'
-import { ResourceProvider, Schema } from './manifest'
+import { APIVersion, ResourceProvider, ResourceType, Schema } from './manifest'
 
 export function convert(manifest: ResourceProvider): {
   typesContent: string
@@ -19,63 +19,19 @@ export function convert(manifest: ResourceProvider): {
   documentationContent: string
 } {
   const factory = new TypeFactory()
-
-  for (const resourceType of manifest.types) {
-    for (const apiVersion of resourceType.apiVersions) {
-      const qualifiedName = `${manifest.name}/${resourceType.name}@${apiVersion.name}`
-
-      const propertyType = factory.addObjectType(
-        `${resourceType.name}Properties`,
-        schemaProperties(apiVersion.schema, factory)
-      )
-
-      const bodyType = factory.addObjectType(qualifiedName, {
-        name: {
-          type: factory.addStringType(),
-          flags:
-            ObjectTypePropertyFlags.Required |
-            ObjectTypePropertyFlags.Identifier,
-          description: 'The resource name.',
-        },
-        location: {
-          type: factory.addStringType(),
-          flags: ObjectTypePropertyFlags.None,
-          description: 'The resource location.',
-        },
-        properties: {
-          type: propertyType,
-          flags: ObjectTypePropertyFlags.Required,
-          description: 'The resource properties.',
-        },
-        apiVersion: {
-          type: factory.addStringLiteralType(apiVersion.name),
-          flags:
-            ObjectTypePropertyFlags.ReadOnly |
-            ObjectTypePropertyFlags.DeployTimeConstant,
-          description: 'The API version.',
-        },
-        type: {
-          type: factory.addStringLiteralType(
-            `${manifest.name}/${resourceType.name}`
-          ),
-          flags:
-            ObjectTypePropertyFlags.ReadOnly |
-            ObjectTypePropertyFlags.DeployTimeConstant,
-          description: 'The resource type.',
-        },
-        id: {
-          type: factory.addStringType(),
-          flags: ObjectTypePropertyFlags.ReadOnly,
-          description: 'The resource id.',
-        },
-      })
-      factory.addResourceType(
-        qualifiedName,
-        ScopeType.Unknown,
-        undefined,
-        bodyType,
-        ResourceFlags.None,
-        {}
+  for (const [resourceTypeName, resourceType] of Object.entries(
+    manifest.types
+  )) {
+    for (const [apiVersionName, apiVersion] of Object.entries(
+      resourceType.apiVersions
+    )) {
+      addResourceTypeForApiVersion(
+        manifest,
+        resourceTypeName,
+        resourceType,
+        apiVersionName,
+        apiVersion,
+        factory
       )
     }
   }
@@ -99,24 +55,102 @@ export function convert(manifest: ResourceProvider): {
   }
 }
 
-function schemaProperties(
+export function addResourceTypeForApiVersion(
+  manifest: ResourceProvider,
+  resourceTypeName: string,
+  _: ResourceType,
+  apiVersionName: string,
+  apiVersion: APIVersion,
+  factory: TypeFactory
+): TypeReference {
+  const qualifiedName = `${manifest.name}/${resourceTypeName}@${apiVersionName}`
+
+  const propertyType = factory.addObjectType(
+    `${resourceTypeName}Properties`,
+    addObjectProperties(apiVersion.schema, factory)
+  )
+
+  const bodyType = factory.addObjectType(qualifiedName, {
+    name: {
+      type: factory.addStringType(),
+      flags:
+        ObjectTypePropertyFlags.Required | ObjectTypePropertyFlags.Identifier,
+      description: 'The resource name.',
+    },
+    location: {
+      type: factory.addStringType(),
+      flags: ObjectTypePropertyFlags.None,
+      description: 'The resource location.',
+    },
+    properties: {
+      type: propertyType,
+      flags: ObjectTypePropertyFlags.Required,
+      description: 'The resource properties.',
+    },
+    apiVersion: {
+      type: factory.addStringLiteralType(apiVersionName),
+      flags:
+        ObjectTypePropertyFlags.ReadOnly |
+        ObjectTypePropertyFlags.DeployTimeConstant,
+      description: 'The API version.',
+    },
+    type: {
+      type: factory.addStringLiteralType(
+        `${manifest.name}/${resourceTypeName}`
+      ),
+      flags:
+        ObjectTypePropertyFlags.ReadOnly |
+        ObjectTypePropertyFlags.DeployTimeConstant,
+      description: 'The resource type.',
+    },
+    id: {
+      type: factory.addStringType(),
+      flags: ObjectTypePropertyFlags.ReadOnly,
+      description: 'The resource id.',
+    },
+  })
+  return factory.addResourceType(
+    qualifiedName,
+    ScopeType.Unknown,
+    undefined,
+    bodyType,
+    ResourceFlags.None,
+    {}
+  )
+}
+
+export function addSchemaType(
+  schema: Schema,
+  name: string,
+  factory: TypeFactory
+): TypeReference {
+  if (schema.type === 'string') {
+    return factory.addStringType()
+  } else if (schema.type === 'object') {
+    return factory.addObjectType(name, addObjectProperties(schema, factory))
+  } else {
+    throw new Error(`Unsupported schema type: ${schema.type}`)
+  }
+}
+
+export function addObjectProperties(
   parent: Schema,
   factory: TypeFactory
 ): Record<string, ObjectTypeProperty> {
   const results: Record<string, ObjectTypeProperty> = {}
   for (const [key, value] of Object.entries(parent.properties ?? {})) {
-    results[key] = addSchemaProperty(parent, key, value, factory)
+    results[key] = addObjectProperty(parent, key, value, factory)
   }
   return results
 }
 
-function addSchemaProperty(
+export function addObjectProperty(
   parent: Schema,
   key: string,
   property: Schema,
   factory: TypeFactory
 ): ObjectTypeProperty {
-  const propertyType = addSchema(property, key, factory)
+  const propertyType = addSchemaType(property, key, factory)
 
   let flags = ObjectTypePropertyFlags.None
   if (parent.required?.includes(key)) {
@@ -130,19 +164,5 @@ function addSchemaProperty(
     description: property.description,
     type: propertyType,
     flags: flags,
-  }
-}
-
-function addSchema(
-  schema: Schema,
-  name: string,
-  factory: TypeFactory
-): TypeReference {
-  if (schema.type === 'string') {
-    return factory.addStringType()
-  } else if (schema.type === 'object') {
-    return factory.addObjectType(name, schemaProperties(schema, factory))
-  } else {
-    throw new Error(`Unsupported schema type: ${schema.type}`)
   }
 }

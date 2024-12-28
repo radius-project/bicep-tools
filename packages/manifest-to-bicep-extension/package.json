@@ -33,7 +33,8 @@
     "watch": "tsc -w",
     "publish": "npm publish",
     "prepublishOnly": "yarn build",
-    "preinstall": "cd ../../bicep-types/src/bicep-types && npm ci && npm run build",
+    "preinstall": "echo 'Building bicep-types...'; cd ../../bicep-types/src/bicep-types && npm ci && npm run build",
+    "postinstall": "echo 'Finished building bicep-types...';",
     "version": "npm pkg set version=${0}"
   }
 }
