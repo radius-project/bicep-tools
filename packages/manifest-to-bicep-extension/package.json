@@ -8,8 +8,7 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
-    "@radius-project:registry": "https://npm.pkg.github.com"
+    "provenance": true
   },
   "packageManager": "yarn@4.5.2",
   "files": [
