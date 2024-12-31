@@ -7,6 +7,7 @@ export default tseslint.config(
     ignores: [
       '**/jest.config.js',
       '**/eslint.config.mjs',
+      '**/webpack.config.js',
       '**/dist/**',
       '**/bicep-types/**',
     ],

@@ -14,7 +14,7 @@
   "files": [
     "dist/"
   ],
-  "main": "dist/src/index.js",
+  "main": "dist/bundle.js",
   "dependencies": {
     "bicep-types": "file:../../bicep-types/src/bicep-types",
     "yaml": "^2.6.0",
@@ -24,16 +24,10 @@
     "@types/node": "^22.7.5",
     "@types/yargs": "^17.0.33"
   },
-  "bundledDependencies": [
-    "bicep-types"
-  ],
   "scripts": {
-    "build": "tsc",
-    "watch": "tsc -w",
+    "build": "webpack",
     "publish": "npm publish",
     "prepublishOnly": "yarn build",
-    "preinstall": "echo 'Building bicep-types...'; cd ../../bicep-types/src/bicep-types && npm ci && npm run build",
-    "postinstall": "echo 'Finished building bicep-types...';",
     "version": "npm pkg set version=${0}"
   }
 }
