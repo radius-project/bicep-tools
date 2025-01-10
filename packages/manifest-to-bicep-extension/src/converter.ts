@@ -43,7 +43,7 @@ export function convert(manifest: ResourceProvider): {
   })
 
   const indexContent = buildIndex(typeFiles, (log) => console.log(log), {
-    name: manifest.name.toLowerCase().replace('.', ''),
+    name: 'radius' + manifest.name.toLowerCase().replace('.', ''),
     version: '0.0.1',
     isSingleton: false,
   })
