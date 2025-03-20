@@ -16,7 +16,7 @@ export interface APIVersion {
 }
 
 export interface Schema {
-  type: 'string' | 'object'
+  type: 'string' | 'object' | 'integer' | 'number' | 'boolean'
   description?: string
   properties?: Record<string, Schema>
   required?: string[]
