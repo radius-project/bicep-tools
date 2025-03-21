@@ -1,0 +1,21 @@
+name: MyCompany.Resources
+types:
+  testResources:
+    apiVersions:
+      '2025-01-01-preview':
+        schema:
+          type: object
+          properties:
+            a:
+              type: number
+              description: "A numeric property"
+            b:
+              type: integer
+              description: "An integer property"
+            c:
+              type: boolean
+              description: "A boolean property"
+            d:
+              type: string
+              description: "A string property"
+        capabilities: ['Recipes']

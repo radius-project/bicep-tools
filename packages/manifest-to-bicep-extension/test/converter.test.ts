@@ -144,6 +144,39 @@ describe('addSchemaType', () => {
     expect(added.properties).toHaveProperty('a')
     expect(added.properties).toHaveProperty('b')
   })
+
+  it('should add a number type', () => {
+    const schema: Schema = {
+      type: 'number',
+    }
+
+    const result = addSchemaType(schema, 'test', factory)
+    const added = factory.types[result.index]
+    expect(added).toBeDefined()
+    expect(added.type).toBe(TypeBaseKind.NumberType)
+  })
+
+  it('should add an integer type', () => {
+    const schema: Schema = {
+      type: 'integer',
+    }
+
+    const result = addSchemaType(schema, 'test', factory)
+    const added = factory.types[result.index]
+    expect(added).toBeDefined()
+    expect(added.type).toBe(TypeBaseKind.IntegerType)
+  })
+
+  it('should add a boolean type', () => {
+    const schema: Schema = {
+      type: 'boolean',
+    }
+
+    const result = addSchemaType(schema, 'test', factory)
+    const added = factory.types[result.index]
+    expect(added).toBeDefined()
+    expect(added.type).toBe(TypeBaseKind.BooleanType)
+  })
 })
 
 describe('addObjectProperties', () => {
