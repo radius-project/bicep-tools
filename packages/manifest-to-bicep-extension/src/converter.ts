@@ -128,8 +128,6 @@ export function addSchemaType(
     return factory.addStringType()
   } else if (schema.type === 'object') {
     return factory.addObjectType(name, addObjectProperties(schema, factory))
-  } else if (schema.type === 'number') {
-    return factory.addNumberType()
   } else if (schema.type === 'integer') {
     return factory.addIntegerType()
   } else if (schema.type === 'boolean') {

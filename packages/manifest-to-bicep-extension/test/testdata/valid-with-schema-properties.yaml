@@ -7,15 +7,12 @@ types:
           type: object
           properties:
             a:
-              type: number
-              description: "A numeric property"
-            b:
               type: integer
               description: "An integer property"
-            c:
+            b:
               type: boolean
               description: "A boolean property"
-            d:
+            c:
               type: string
               description: "A string property"
         capabilities: ['Recipes']
