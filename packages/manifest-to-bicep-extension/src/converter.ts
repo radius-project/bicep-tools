@@ -87,6 +87,7 @@ export function addResourceTypeForApiVersion(
       flags: ObjectTypePropertyFlags.Required,
       description: 'The resource properties.',
     },
+    
     apiVersion: {
       type: factory.addStringLiteralType(apiVersionName),
       flags:
@@ -127,11 +128,13 @@ export function addSchemaType(
   if (schema.type === 'string') {
     return factory.addStringType()
   } else if (schema.type === 'object') {
-    return factory.addObjectType(name, addObjectProperties(schema, factory))
+    return factory.addObjectType(name, addObjectProperties(schema, factory), factory.addAnyType())
   } else if (schema.type === 'integer') {
     return factory.addIntegerType()
   } else if (schema.type === 'boolean') {
     return factory.addBooleanType()
+  } else if (schema.type === 'any') {
+    return factory.addAnyType()
   } else {
     throw new Error(`Unsupported schema type: ${schema.type}`)
   }

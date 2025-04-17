@@ -15,4 +15,12 @@ types:
             c:
               type: string
               description: "A string property"
+            connections:
+              type: object
+              addtionalProperties: 
+                type: object
+                properties:
+                  source:
+                    type: string
+                    description: "A connection string property"
         capabilities: ['Recipes']
