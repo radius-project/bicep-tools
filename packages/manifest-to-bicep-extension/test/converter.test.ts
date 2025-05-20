@@ -25,7 +25,7 @@ describe('addResourceTypeForApiVersion', () => {
 
   it('should add a resource type', () => {
     const manifest: ResourceProvider = {
-      name: 'Applications.Test',
+      namespace: 'Applications.Test',
       types: {
         testResources: {
           apiVersions: {
