@@ -43,7 +43,7 @@ export function convert(manifest: ResourceProvider): {
   })
 
   const indexContent = buildIndex(typeFiles, (log) => console.log(log), {
-    name: 'radius' + manifest.namespace.toLowerCase().replace('.', ''),
+    name: 'radius' + manifest.name.toLowerCase().replace('.', ''),
     version: '0.0.1',
     isSingleton: false,
   })
@@ -63,7 +63,7 @@ export function addResourceTypeForApiVersion(
   apiVersion: APIVersion,
   factory: TypeFactory
 ): TypeReference {
-  const qualifiedName = `${manifest.namespace}/${resourceTypeName}@${apiVersionName}`
+  const qualifiedName = `${manifest.name}/${resourceTypeName}@${apiVersionName}`
 
   const propertyType = factory.addObjectType(
     `${resourceTypeName}Properties`,
@@ -97,7 +97,7 @@ export function addResourceTypeForApiVersion(
     },
     type: {
       type: factory.addStringLiteralType(
-        `${manifest.namespace}/${resourceTypeName}`
+        `${manifest.name}/${resourceTypeName}`
       ),
       flags:
         ObjectTypePropertyFlags.ReadOnly |

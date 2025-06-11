@@ -1,7 +1,7 @@
 import { parse } from 'yaml'
 
 export interface ResourceProvider {
-  namespace: string
+  name: string
   types: Record<string, ResourceType>
 }
 
