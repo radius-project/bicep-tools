@@ -87,7 +87,7 @@ export function addResourceTypeForApiVersion(
       flags: ObjectTypePropertyFlags.Required,
       description: 'The resource properties.',
     },
-    
+
     apiVersion: {
       type: factory.addStringLiteralType(apiVersionName),
       flags:
@@ -126,9 +126,31 @@ export function addSchemaType(
   factory: TypeFactory
 ): TypeReference {
   if (schema.type === 'string') {
-    return factory.addStringType()
+    // Handle the edge case: string with enum constraint
+    if (schema.enum && schema.enum.length > 0) {
+      const enumTypeReferences = schema.enum.map((value) =>
+        factory.addStringLiteralType(value)
+      )
+      return factory.addUnionType(enumTypeReferences)
+    }
+    return factory.addStringType() // Regular string without constraints
+  } else if (schema.type === 'enum') {
+    // Handle explicit enum type
+    if (!schema.enum || schema.enum.length === 0) {
+      throw new Error(
+        `Enum type must have at least one value in 'enum' property`
+      )
+    }
+    const enumTypeReferences = schema.enum.map((value) =>
+      factory.addStringLiteralType(value)
+    )
+    return factory.addUnionType(enumTypeReferences)
   } else if (schema.type === 'object') {
-    return factory.addObjectType(name, addObjectProperties(schema, factory), factory.addAnyType())
+    return factory.addObjectType(
+      name,
+      addObjectProperties(schema, factory),
+      factory.addAnyType()
+    )
   } else if (schema.type === 'integer') {
     return factory.addIntegerType()
   } else if (schema.type === 'boolean') {

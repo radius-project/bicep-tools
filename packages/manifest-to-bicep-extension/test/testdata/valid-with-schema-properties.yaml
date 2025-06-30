@@ -8,19 +8,23 @@ types:
           properties:
             a:
               type: integer
-              description: "An integer property"
+              description: 'An integer property'
             b:
               type: boolean
-              description: "A boolean property"
+              description: 'A boolean property'
             c:
               type: string
-              description: "A string property"
+              description: 'A string property'
+            status:
+              type: enum
+              enum: ['active', 'inactive', 'pending']
+              description: 'The status of the resource'
             connections:
               type: object
-              addtionalProperties: 
+              addtionalProperties:
                 type: object
                 properties:
                   source:
                     type: string
-                    description: "A connection string property"
+                    description: 'A connection string property'
         capabilities: ['Recipes']

@@ -12,8 +12,10 @@ import {
   ResourceFlags,
   ResourceType,
   ScopeType,
+  StringLiteralType,
   TypeBaseKind,
   TypeFactory,
+  UnionType,
 } from 'bicep-types'
 
 describe('addResourceTypeForApiVersion', () => {
@@ -165,6 +167,37 @@ describe('addSchemaType', () => {
     const added = factory.types[result.index]
     expect(added).toBeDefined()
     expect(added.type).toBe(TypeBaseKind.BooleanType)
+  })
+
+  it('should add an enum type', () => {
+    const schema: Schema = {
+      type: 'enum',
+      enum: ['value1', 'value2', 'value3'],
+    }
+
+    const result = addSchemaType(schema, 'testEnum', factory)
+    const added = factory.types[result.index] as UnionType
+
+    expect(added.type).toBe(TypeBaseKind.UnionType)
+    expect(added.elements).toHaveLength(3)
+
+    // Verify each enum value is a string literal
+    added.elements.forEach((element, index) => {
+      const stringLiteral = factory.types[element.index] as StringLiteralType
+      expect(stringLiteral.type).toBe(TypeBaseKind.StringLiteralType)
+      expect(stringLiteral.value).toBe(schema.enum?.[index])
+    })
+  })
+
+  it('should throw error for enum without values', () => {
+    const schema: Schema = {
+      type: 'enum',
+      enum: [],
+    }
+
+    expect(() => addSchemaType(schema, 'testEnum', factory)).toThrow(
+      "Enum type must have at least one value in 'enum' property"
+    )
   })
 })
 
