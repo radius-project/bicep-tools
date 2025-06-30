@@ -897,8 +897,6 @@ __metadata:
     bicep-types: "file:../../bicep-types/src/bicep-types"
     yaml: "npm:^2.6.0"
     yargs: "npm:^17.7.2"
-  bin:
-    manifest-to-bicep: bin.js
   languageName: unknown
   linkType: soft
 
