@@ -189,6 +189,26 @@ describe('addSchemaType', () => {
     })
   })
 
+  it('should create a union type for a string type with enum property', () => {
+  const schema: Schema = {
+    type: 'string',
+    enum: ['apple', 'banana', 'cherry'],
+  };
+
+  const result = addSchemaType(schema, 'fruit', factory);
+  const added = factory.types[result.index] as UnionType;
+
+  expect(added.type).toBe(TypeBaseKind.UnionType);
+  expect(added.elements).toHaveLength(3);
+
+  // Verify each element is a StringLiteralType with the correct value
+  added.elements.forEach((element, idx) => {
+    const stringLiteral = factory.types[element.index] as StringLiteralType;
+    expect(stringLiteral.type).toBe(TypeBaseKind.StringLiteralType);
+    expect(stringLiteral.value).toBe(schema.enum?.[idx]);
+  });
+});
+
   it('should throw error for enum without values', () => {
     const schema: Schema = {
       type: 'enum',
