@@ -138,7 +138,7 @@ export function addSchemaType(
     // Handle explicit enum type
     if (!schema.enum || schema.enum.length === 0) {
       throw new Error(
-        `Enum type must have at least one value in 'enum' property`
+       `Enum type '${name}' must have at least one value in 'enum' property`
       )
     }
     const enumTypeReferences = schema.enum.map((value) =>

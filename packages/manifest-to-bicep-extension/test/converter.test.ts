@@ -196,7 +196,7 @@ describe('addSchemaType', () => {
     }
 
     expect(() => addSchemaType(schema, 'testEnum', factory)).toThrow(
-      "Enum type must have at least one value in 'enum' property"
+      "Enum type 'testEnum' must have at least one value in 'enum' property"
     )
   })
 })
