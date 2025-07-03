@@ -21,7 +21,7 @@ types:
               description: 'The status of the resource'
             connections:
               type: object
-              addtionalProperties:
+              additionalProperties:
                 type: object
                 properties:
                   source:
