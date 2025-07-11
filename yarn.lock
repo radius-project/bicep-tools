@@ -895,7 +895,6 @@ __metadata:
     "@types/node": "npm:^22.7.5"
     "@types/yargs": "npm:^17.0.33"
     bicep-types: "file:../../bicep-types/src/bicep-types"
-    path: "npm:^0.12.7"
     yaml: "npm:^2.6.0"
     yargs: "npm:^17.7.2"
   languageName: unknown
@@ -1652,8 +1651,8 @@ __metadata:
 
 "bicep-types@file:../../bicep-types/src/bicep-types::locator=%40radius-project%2Fmanifest-to-bicep-extension%40workspace%3Apackages%2Fmanifest-to-bicep-extension":
   version: 0.0.0-placeholder
-  resolution: "bicep-types@file:../../bicep-types/src/bicep-types#../../bicep-types/src/bicep-types::hash=15c3ef&locator=%40radius-project%2Fmanifest-to-bicep-extension%40workspace%3Apackages%2Fmanifest-to-bicep-extension"
-  checksum: 10c0/6a38eccdd4b4ecfff20b63eb522af8ac4cd8d6f87bf8451b367e0ffac2742f2139364749c507c3eed52b426c7bb129f3a1cc745ce81cb0d1ff2199b338ccb8d2
+  resolution: "bicep-types@file:../../bicep-types/src/bicep-types#../../bicep-types/src/bicep-types::hash=59eeb7&locator=%40radius-project%2Fmanifest-to-bicep-extension%40workspace%3Apackages%2Fmanifest-to-bicep-extension"
+  checksum: 10c0/5eec3e7c6cc9b70c2332608fd444104d1d0b6c3938fec3b18bb30942b6f8a24f3b194ae044e34bb489441b2ceb58153eba1d4499f2f6ee247a51079495990549
   languageName: node
   linkType: hard
 
@@ -2721,13 +2720,6 @@ __metadata:
   version: 2.0.4
   resolution: "inherits@npm:2.0.4"
   checksum: 10c0/4e531f648b29039fb7426fb94075e6545faa1eb9fe83c29f0b6d9e7263aceb4289d2d4557db0d428188eeb449cc7c5e77b0a0b2c4e248ff2a65933a0dee49ef2
-  languageName: node
-  linkType: hard
-
-"inherits@npm:2.0.3":
-  version: 2.0.3
-  resolution: "inherits@npm:2.0.3"
-  checksum: 10c0/6e56402373149ea076a434072671f9982f5fad030c7662be0332122fe6c0fa490acb3cc1010d90b6eff8d640b1167d77674add52dfd1bb85d545cf29e80e73e7
   languageName: node
   linkType: hard
 
@@ -4013,16 +4005,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"path@npm:^0.12.7":
-  version: 0.12.7
-  resolution: "path@npm:0.12.7"
-  dependencies:
-    process: "npm:^0.11.1"
-    util: "npm:^0.10.3"
-  checksum: 10c0/f795ce5438a988a590c7b6dfd450ec9baa1c391a8be4c2dea48baa6e0f5b199e56cd83b8c9ebf3991b81bea58236d2c32bdafe2c17a2e70c3a2e4c69891ade59
-  languageName: node
-  linkType: hard
-
 "picocolors@npm:^1.0.0, picocolors@npm:^1.1.0":
   version: 1.1.1
   resolution: "picocolors@npm:1.1.1"
@@ -4084,13 +4066,6 @@ __metadata:
   version: 5.0.0
   resolution: "proc-log@npm:5.0.0"
   checksum: 10c0/bbe5edb944b0ad63387a1d5b1911ae93e05ce8d0f60de1035b218cdcceedfe39dbd2c697853355b70f1a090f8f58fe90da487c85216bf9671f9499d1a897e9e3
-  languageName: node
-  linkType: hard
-
-"process@npm:^0.11.1":
-  version: 0.11.10
-  resolution: "process@npm:0.11.10"
-  checksum: 10c0/40c3ce4b7e6d4b8c3355479df77aeed46f81b279818ccdc500124e6a5ab882c0cc81ff7ea16384873a95a74c4570b01b120f287abbdd4c877931460eca6084b3
   languageName: node
   linkType: hard
 
@@ -4819,15 +4794,6 @@ __metadata:
   dependencies:
     punycode: "npm:^2.1.0"
   checksum: 10c0/4ef57b45aa820d7ac6496e9208559986c665e49447cb072744c13b66925a362d96dd5a46c4530a6b8e203e5db5fe849369444440cb22ecfc26c679359e5dfa3c
-  languageName: node
-  linkType: hard
-
-"util@npm:^0.10.3":
-  version: 0.10.4
-  resolution: "util@npm:0.10.4"
-  dependencies:
-    inherits: "npm:2.0.3"
-  checksum: 10c0/d29f6893e406b63b088ce9924da03201df89b31490d4d011f1c07a386ea4b3dbe907464c274023c237da470258e1805d806c7e4009a5974cd6b1d474b675852a
   languageName: node
   linkType: hard
 
