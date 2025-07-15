@@ -146,10 +146,22 @@ export function addSchemaType(
     )
     return factory.addUnionType(enumTypeReferences)
   } else if (schema.type === 'object') {
+    let additionalPropertiesType: TypeReference | undefined = undefined
+    if (schema.additionalProperties) {
+      if (schema.additionalProperties === 'any') {
+        additionalPropertiesType = factory.addAnyType()
+      } else {
+        additionalPropertiesType = addSchemaType(
+          schema.additionalProperties, 
+          `${name}AdditionalProperties`, 
+          factory
+        )
+      }
+    }
     return factory.addObjectType(
       name,
       addObjectProperties(schema, factory),
-      factory.addAnyType()
+      additionalPropertiesType
     )
   } else if (schema.type === 'integer') {
     return factory.addIntegerType()
