@@ -171,7 +171,9 @@ describe('addResourceTypeForApiVersion', () => {
     expect(addedPropertiesType.properties).toHaveProperty('connections')
 
     const connectionsProperty = addedPropertiesType.properties['connections']
-    const connectionsType = factory.types[connectionsProperty.type.index] as ObjectType
+    const connectionsType = factory.types[
+      connectionsProperty.type.index
+    ] as ObjectType
 
     // Verify connections has additionalProperties
     expect(connectionsType.additionalProperties).toBeDefined()
@@ -276,24 +278,24 @@ describe('addSchemaType', () => {
   })
 
   it('should create a union type for a string type with enum property', () => {
-  const schema: Schema = {
-    type: 'string',
-    enum: ['apple', 'banana', 'cherry'],
-  };
+    const schema: Schema = {
+      type: 'string',
+      enum: ['apple', 'banana', 'cherry'],
+    }
 
-  const result = addSchemaType(schema, 'fruit', factory);
-  const added = factory.types[result.index] as UnionType;
+    const result = addSchemaType(schema, 'fruit', factory)
+    const added = factory.types[result.index] as UnionType
 
-  expect(added.type).toBe(TypeBaseKind.UnionType);
-  expect(added.elements).toHaveLength(3);
+    expect(added.type).toBe(TypeBaseKind.UnionType)
+    expect(added.elements).toHaveLength(3)
 
-  // Verify each element is a StringLiteralType with the correct value
-  added.elements.forEach((element, idx) => {
-    const stringLiteral = factory.types[element.index] as StringLiteralType;
-    expect(stringLiteral.type).toBe(TypeBaseKind.StringLiteralType);
-    expect(stringLiteral.value).toBe(schema.enum?.[idx]);
-  });
-});
+    // Verify each element is a StringLiteralType with the correct value
+    added.elements.forEach((element, idx) => {
+      const stringLiteral = factory.types[element.index] as StringLiteralType
+      expect(stringLiteral.type).toBe(TypeBaseKind.StringLiteralType)
+      expect(stringLiteral.value).toBe(schema.enum?.[idx])
+    })
+  })
 
   it('should add an object type with additionalProperties', () => {
     const schema: Schema = {
@@ -333,7 +335,28 @@ describe('addSchemaType', () => {
     expect(additionalPropsType.properties).toHaveProperty('status')
   })
 
-  it('should add an object type with additionalProperties set to "any"', () => {
+  it('should add an object type with only additionalProperties (no fixed properties)', () => {
+    const schema: Schema = {
+      type: 'object',
+      additionalProperties: {
+        type: 'string',
+      },
+    }
+
+    const result = addSchemaType(schema, 'testWithOnlyAdditionalProps', factory)
+    const added = factory.types[result.index] as ObjectType
+
+    expect(added.type).toBe(TypeBaseKind.ObjectType)
+    expect(added.properties).toEqual({})
+    expect(added.additionalProperties).toBeDefined()
+
+    // Verify additionalProperties is StringType
+    const additionalPropsType =
+      factory.types[added.additionalProperties?.index || 0]
+    expect(additionalPropsType.type).toBe(TypeBaseKind.StringType)
+  })
+
+  it('should add an object type with only properties (no additionalProperties)', () => {
     const schema: Schema = {
       type: 'object',
       properties: {
@@ -341,20 +364,15 @@ describe('addSchemaType', () => {
           type: 'string',
         },
       },
-      additionalProperties: 'any',
     }
 
-    const result = addSchemaType(schema, 'testWithAnyAdditionalProps', factory)
+    const result = addSchemaType(schema, 'testWithOnlyProperties', factory)
     const added = factory.types[result.index] as ObjectType
 
     expect(added.type).toBe(TypeBaseKind.ObjectType)
     expect(added.properties).toBeDefined()
     expect(added.properties).toHaveProperty('fixedProp')
-    expect(added.additionalProperties).toBeDefined()
-
-    // Verify additionalProperties is AnyType
-    const additionalPropsType = factory.types[added.additionalProperties?.index || 0]
-    expect(additionalPropsType.type).toBe(TypeBaseKind.AnyType)
+    expect(added.additionalProperties).toBeUndefined()
   })
 
   it('should throw error for enum without values', () => {
@@ -377,6 +395,41 @@ describe('addSchemaType', () => {
     expect(() => addSchemaType(schema, 'testEnum', factory)).toThrow(
       "Enum type 'testEnum' must have at least one value in 'enum' property"
     )
+  })
+
+  it('should throw error for additionalProperties: true (Boolean form)', () => {
+    const schema = {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+        },
+      },
+      additionalProperties: true, // Boolean form is not supported
+    } as unknown as Schema
+
+    expect(() =>
+      addSchemaType(schema, 'testWithBooleanAdditionalProps', factory)
+    ).toThrow('Unsupported schema type: undefined')
+  })
+
+  it('should throw error for additionalProperties with type: any', () => {
+    const schema = {
+      type: 'object',
+      properties: {
+        name: {
+          type: 'string',
+        },
+      },
+      additionalProperties: {
+        type: 'any', // "any" type is not supported
+        description: 'A map of key-value pairs',
+      },
+    } as unknown as Schema
+
+    expect(() =>
+      addSchemaType(schema, 'testWithAnyAdditionalProps', factory)
+    ).toThrow('Unsupported schema type: any')
   })
 })
 
@@ -434,7 +487,9 @@ describe('addObjectProperties', () => {
 
     // Verify that connections property was created correctly
     const connectionsProperty = result['connections']
-    const connectionsType = factory.types[connectionsProperty.type.index] as ObjectType
+    const connectionsType = factory.types[
+      connectionsProperty.type.index
+    ] as ObjectType
     expect(connectionsType.type).toBe(TypeBaseKind.ObjectType)
     expect(connectionsType.additionalProperties).toBeDefined()
   })
