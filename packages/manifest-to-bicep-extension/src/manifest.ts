@@ -16,13 +16,14 @@ export interface APIVersion {
 }
 
 export interface Schema {
-  type: 'string' | 'object' | 'integer' | 'boolean' | 'enum'
+  type: 'string' | 'object' | 'integer' | 'boolean' | 'enum' | 'array'
   description?: string
   properties?: Record<string, Schema>
   additionalProperties?: Record<string, Schema>
   required?: string[]
   readOnly?: boolean
   enum?: string[]
+  items?: Schema
 }
 
 export function parseManifest(input: string): ResourceProvider {
