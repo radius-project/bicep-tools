@@ -386,6 +386,68 @@ describe('addSchemaType', () => {
     )
   })
 
+  it('should add an array type with string items', () => {
+    const schema: Schema = {
+      type: 'array',
+      items: {
+        type: 'string',
+      },
+    }
+
+    const result = addSchemaType(schema, 'testArray', factory)
+    const added = factory.types[result.index]
+    expect(added).toBeDefined()
+    expect(added.type).toBe(TypeBaseKind.ArrayType)
+  })
+
+  it('should add an array type with object items', () => {
+    const schema: Schema = {
+      type: 'array',
+      items: {
+        type: 'object',
+        properties: {
+          name: {
+            type: 'string',
+          },
+          value: {
+            type: 'integer',
+          },
+        },
+      },
+    }
+
+    const result = addSchemaType(schema, 'testObjectArray', factory)
+    const added = factory.types[result.index]
+    expect(added).toBeDefined()
+    expect(added.type).toBe(TypeBaseKind.ArrayType)
+  })
+
+  it('should add nested array types', () => {
+    const schema: Schema = {
+      type: 'array',
+      items: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+    }
+
+    const result = addSchemaType(schema, 'nestedArray', factory)
+    const added = factory.types[result.index]
+    expect(added).toBeDefined()
+    expect(added.type).toBe(TypeBaseKind.ArrayType)
+  })
+
+  it('should throw error for array without items', () => {
+    const schema: Schema = {
+      type: 'array',
+    }
+
+    expect(() => addSchemaType(schema, 'testArray', factory)).toThrow(
+      "Array type 'testArray' must have an 'items' property"
+    )
+  })
   it('should throw error for enum without enum property', () => {
     const schema: Schema = {
       type: 'enum',
