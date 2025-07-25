@@ -19,7 +19,7 @@ export interface Schema {
   type: 'string' | 'object' | 'integer' | 'boolean' | 'enum' | 'array'
   description?: string
   properties?: Record<string, Schema>
-  additionalProperties?: Record<string, Schema>
+  additionalProperties?: Schema
   required?: string[]
   readOnly?: boolean
   enum?: string[]
