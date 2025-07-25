@@ -138,7 +138,7 @@ export function addSchemaType(
     // Handle explicit enum type
     if (!schema.enum || schema.enum.length === 0) {
       throw new Error(
-       `Enum type '${name}' must have at least one value in 'enum' property`
+        `Enum type '${name}' must have at least one value in 'enum' property`
       )
     }
     const enumTypeReferences = schema.enum.map((value) =>
@@ -146,17 +146,23 @@ export function addSchemaType(
     )
     return factory.addUnionType(enumTypeReferences)
   } else if (schema.type === 'object') {
+    let additionalPropertiesType: TypeReference | undefined = undefined
+    if (schema.additionalProperties) {
+      additionalPropertiesType = addSchemaType(
+        schema.additionalProperties,
+        `${name}AdditionalProperties`,
+        factory
+      )
+    }
     return factory.addObjectType(
       name,
       addObjectProperties(schema, factory),
-      factory.addAnyType()
+      additionalPropertiesType
     )
   } else if (schema.type === 'integer') {
     return factory.addIntegerType()
   } else if (schema.type === 'boolean') {
     return factory.addBooleanType()
-  } else if (schema.type === 'any') {
-    return factory.addAnyType()
   } else {
     throw new Error(`Unsupported schema type: ${schema.type}`)
   }
