@@ -159,6 +159,12 @@ export function addSchemaType(
       addObjectProperties(schema, factory),
       additionalPropertiesType
     )
+  } else if (schema.type === 'array') {
+    if (!schema.items) {
+      throw new Error(`Array type '${name}' must have an 'items' property`)
+    }
+    const itemType = addSchemaType(schema.items, `${name}Item`, factory)
+    return factory.addArrayType(itemType)
   } else if (schema.type === 'integer') {
     return factory.addIntegerType()
   } else if (schema.type === 'boolean') {

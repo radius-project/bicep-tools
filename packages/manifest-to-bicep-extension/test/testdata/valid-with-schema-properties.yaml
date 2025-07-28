@@ -27,4 +27,19 @@ types:
                   source:
                     type: string
                     description: 'A connection string property'
+            tags:
+              type: array
+              items:
+                type: string
+              description: 'An array of tags'
+            metadata:
+              type: array
+              items:
+                type: object
+                properties:
+                  key:
+                    type: string
+                  value:
+                    type: string
+              description: 'An array of metadata objects'
         capabilities: ['Recipes']
