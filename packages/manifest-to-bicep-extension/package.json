@@ -1,6 +1,6 @@
 {
   "name": "@radius-project/manifest-to-bicep-extension",
-  "version": "0.0.1-alpha",
+  "version": "0.0.1-edge",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
