@@ -121,17 +121,19 @@ jobs:
         shell: bash
         run: |
           echo "COMMIT=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
-      - name: Publish
+      - name: Publish Edge
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         shell: bash
         env:
           PUBLISH_ARGS: --access public --tag edge
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
         run: yarn run publish:all 0.0.1-edge.${{ env.COMMIT }}
-      - name: Publish-rel
+      - name: Publish Release
         if: ${{ env.CI_PUBLISH_RELEASE == 'true' }}
         shell: bash
         env:
-          PUBLISH_ARGS: --access public --tag edge
+          PUBLISH_ARGS: --access public --tag latest
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn run publish:all 0.0.1-edge.${{ env.COMMIT }}
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          yarn run publish:all $VERSION
