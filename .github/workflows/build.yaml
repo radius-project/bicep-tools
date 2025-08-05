@@ -6,11 +6,15 @@ on:
       - main
       - features/*
       - release/*
+    tags:
+      - v*
   pull_request:
     branches:
       - main
       - features/*
       - release/*
+env:
+  CI_PUBLISH_RELEASE: ${{ github.repository == 'radius-project/bicep-tools' && startsWith(github.ref, 'refs/tags/v') && github.event_name == 'push' }}
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -117,10 +121,19 @@ jobs:
         shell: bash
         run: |
           echo "COMMIT=$(git rev-parse --short "$GITHUB_SHA")" >> "$GITHUB_ENV"
-      - name: Publish
+      - name: Publish Edge
         if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
         shell: bash
         env:
-          PUBLISH_ARGS: --access public --tag alpha
+          PUBLISH_ARGS: --access public --tag edge
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-        run: yarn run publish:all 0.0.1-alpha.${{ env.COMMIT }}
+        run: yarn run publish:all 0.0.1-edge.${{ env.COMMIT }}
+      - name: Publish Release
+        if: ${{ env.CI_PUBLISH_RELEASE == 'true' }}
+        shell: bash
+        env:
+          PUBLISH_ARGS: --access public --tag latest
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: |
+          VERSION=${GITHUB_REF#refs/tags/v}
+          yarn run publish:all $VERSION
