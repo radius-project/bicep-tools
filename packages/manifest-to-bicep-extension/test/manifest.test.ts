@@ -6,7 +6,7 @@ describe('parseManifest', () => {
   it('should parse a manifest file with required fields', () => {
     const input = fs.readFileSync(__dirname + '/testdata/valid.yaml', 'utf8')
     const result: ResourceProvider = parseManifest(input)
-    expect(result.name).toBe('MyCompany.Resources')
+    expect(result.namespace).toBe('MyCompany.Resources')
     expect(result.types).toStrictEqual({
       testResources: {
         apiVersions: {
